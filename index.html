@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CookLink — Cuisinez en toute simplicité</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Outfit', sans-serif;
+      min-height: 100vh;
+      background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 50%, #a5d6a7 100%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem;
+    }
+
+    main {
+      text-align: center;
+      max-width: 480px;
+    }
+
+    .logo {
+      font-size: 3rem;
+      font-weight: 700;
+      color: #2e7d32;
+      letter-spacing: -0.02em;
+      margin-bottom: 0.5rem;
+      text-shadow: 0 2px 20px rgba(46, 125, 50, 0.15);
+    }
+
+    .tagline {
+      font-size: 1.1rem;
+      color: #558b2f;
+      font-weight: 400;
+      margin-bottom: 3rem;
+      opacity: 0.9;
+    }
+
+    .cta {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.6rem;
+      background: #2e7d32;
+      color: white;
+      font-family: inherit;
+      font-size: 1.1rem;
+      font-weight: 600;
+      padding: 1rem 2rem;
+      border: none;
+      border-radius: 1rem;
+      cursor: pointer;
+      box-shadow: 0 4px 20px rgba(46, 125, 50, 0.35);
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .cta:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 28px rgba(46, 125, 50, 0.4);
+    }
+
+    .cta:active {
+      transform: translateY(0);
+    }
+
+    .cta svg {
+      width: 1.25rem;
+      height: 1.25rem;
+    }
+
+    .recette-input {
+      width: 100%;
+      min-height: 140px;
+      margin-bottom: 1.5rem;
+      padding: 1rem;
+      font-family: inherit;
+      font-size: 1rem;
+      border: 2px solid #a5d6a7;
+      border-radius: 0.75rem;
+      resize: vertical;
+      background: rgba(255, 255, 255, 0.7);
+      color: #1b5e20;
+    }
+
+    .recette-input::placeholder {
+      color: #81c784;
+    }
+
+    .recette-input:focus {
+      outline: none;
+      border-color: #2e7d32;
+      box-shadow: 0 0 0 3px rgba(46, 125, 50, 0.2);
+    }
+
+    .cta-wrap {
+      margin-bottom: 2rem;
+    }
+
+    .ingredients-block {
+      text-align: left;
+      width: 100%;
+      padding: 1.25rem;
+      background: rgba(255, 255, 255, 0.6);
+      border-radius: 1rem;
+      border: 1px solid #c8e6c9;
+    }
+
+    .ingredients-block h2 {
+      font-size: 1.1rem;
+      color: #2e7d32;
+      margin-bottom: 0.75rem;
+    }
+
+    .ingredients-block ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .ingredients-block li {
+      padding: 0.4rem 0;
+      padding-left: 1.25rem;
+      position: relative;
+      color: #1b5e20;
+      font-size: 0.95rem;
+    }
+
+    .ingredients-block li::before {
+      content: "•";
+      position: absolute;
+      left: 0;
+      color: #4caf50;
+      font-weight: 700;
+    }
+
+    .ingredients-block .loading,
+    .ingredients-block .error {
+      color: #558b2f;
+      font-size: 0.95rem;
+    }
+
+    .ingredients-block .error {
+      color: #c62828;
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <h1 class="logo">CookLink</h1>
+    <p class="tagline">Transformez vos ingrédients en recettes en un scan</p>
+
+    <textarea
+      class="recette-input"
+      id="recette-input"
+      placeholder="Collez ici le texte de votre recette…"
+      aria-label="Zone de texte pour coller une recette"
+    ></textarea>
+
+    <div class="cta-wrap">
+      <button type="button" class="cta" id="btn-analyze" aria-label="Scanner une recette">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v1m6 11h2m-6 0h-2v4m0-11v3m0 0h.01M12 12h4.01M16 20h4M4 12h4m12 0h.01M5 8h2a1 1 0 001-1V5a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1zm12 0h2a1 1 0 001-1V5a1 1 0 00-1-1h-2a1 1 0 00-1 1v2a1 1 0 001 1zM5 20h2a1 1 0 001-1v-2a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1z" />
+        </svg>
+        Scanner une recette
+      </button>
+    </div>
+
+    <div class="ingredients-block" id="ingredients-block" aria-live="polite" hidden>
+      <h2 id="ingredients-title"></h2>
+      <ul id="ingredients-list"></ul>
+      <p class="loading" id="ingredients-loading" hidden>Analyse en cours…</p>
+      <p class="error" id="ingredients-error" hidden></p>
+    </div>
+  </main>
+
+  
+    <script>
+    // On sélectionne les éléments de la page
+    // ⚠️ Vérifiez que votre bouton a bien l'ID "scan-btn" ou adaptez le nom ci-dessous
+    // ⚠️ Vérifiez que votre zone de texte a bien l'ID "recipe-input"
+    
+    const button = document.querySelector('button'); 
+    const textarea = document.querySelector('textarea');
+    const resultDiv = document.createElement('div'); // On crée la zone de résultat
+    document.body.appendChild(resultDiv); // On l'ajoute à la page
+
+    button.addEventListener('click', async () => {
+        const text = textarea.value;
+        if (!text) return alert("Collez une recette d'abord !");
+
+        button.textContent = "Analyse en cours..."; // Petit effet visuel
+        resultDiv.innerHTML = "⏳ L'IA réfléchit...";
+
+        try {
+            // C'est ICI que ça se joue : on met juste '/analyze'
+            // Le navigateur comprendra qu'il faut parler au même serveur qui héberge le site
+            const response = await fetch('/analyze', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ recipe: text })
+            });
+
+            const data = await response.json();
+            
+            // Affichage simple du résultat
+            let html = "<h3>🛒 Liste de courses :</h3><ul>";
+            data.ingredients.forEach(ing => {
+                html += `<li><b>${ing.quantite} ${ing.unite || ''}</b> ${ing.item} (${ing.rayon})</li>`;
+            });
+            html += "</ul>";
+            
+            resultDiv.innerHTML = html;
+            button.textContent = "Scanner une autre recette";
+
+        } catch (error) {
+            console.error(error);
+            resultDiv.innerHTML = "❌ Erreur : Impossible de contacter le serveur.";
+            button.textContent = "Réessayer";
+        }
+    });
+</script>
+
+</body>
+</html>
