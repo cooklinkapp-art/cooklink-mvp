@@ -8,11 +8,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;800&display=swap" rel="stylesheet">
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
 
     body {
       font-family: 'Inter', sans-serif;
@@ -21,9 +17,7 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      padding: 3rem 1.5rem;
-      
-      /* Le nouveau fond aquarelle/mesh dynamique */
+      padding: 3rem 1.5rem 1rem 1.5rem;
       background-color: #f8fafc;
       background-image: 
         radial-gradient(at 0% 0%, rgba(167, 243, 208, 0.6) 0px, transparent 50%),
@@ -32,16 +26,15 @@
       background-attachment: fixed;
     }
 
-    /* Le conteneur principal */
     .app-container {
       width: 100%;
       max-width: 500px;
       display: flex;
       flex-direction: column;
       align-items: center;
+      flex-grow: 1;
     }
 
-    /* La carte blanche (l'application) */
     main {
       text-align: center;
       width: 100%;
@@ -51,197 +44,75 @@
       box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.05);
       border: 1px solid rgba(255, 255, 255, 0.5);
       backdrop-filter: blur(10px);
-      z-index: 10;
     }
 
-    .logo {
-      font-size: 2.2rem;
-      font-weight: 800;
-      color: #0f172a;
-      letter-spacing: -0.03em;
-      margin-bottom: 0.5rem;
-    }
-
-    .tagline {
-      font-size: 1rem;
-      color: #64748b;
-      font-weight: 400;
-      margin-bottom: 2.5rem;
-      line-height: 1.5;
-    }
+    .logo { font-size: 2.2rem; font-weight: 800; color: #0f172a; letter-spacing: -0.03em; margin-bottom: 0.5rem; }
+    .tagline { font-size: 1rem; color: #64748b; font-weight: 400; margin-bottom: 2.5rem; line-height: 1.5; }
 
     .recette-input {
-      width: 100%;
-      min-height: 140px;
-      margin-bottom: 1.5rem;
-      padding: 1rem;
-      font-family: inherit;
-      font-size: 0.95rem;
-      border: 2px solid #e2e8f0;
-      border-radius: 0.75rem;
-      resize: vertical;
-      background: #f8fafc;
-      color: #334155;
-      transition: all 0.2s ease;
+      width: 100%; min-height: 140px; margin-bottom: 1.5rem; padding: 1rem;
+      font-family: inherit; font-size: 0.95rem; border: 2px solid #e2e8f0;
+      border-radius: 0.75rem; resize: vertical; background: #f8fafc; color: #334155; transition: all 0.2s ease;
     }
+    .recette-input:focus { outline: none; background: #ffffff; border-color: #10b981; box-shadow: 0 0 0 4px rgba(16, 185, 129, 0.1); }
 
-    .recette-input:focus {
-      outline: none;
-      background: #ffffff;
-      border-color: #10b981;
-      box-shadow: 0 0 0 4px rgba(16, 185, 129, 0.1);
-    }
-
-    .cta-wrap {
-      margin-bottom: 1rem;
-    }
-
-    .cta {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 0.6rem;
-      background: #10b981;
-      color: white;
-      font-family: inherit;
-      font-size: 1rem;
-      font-weight: 600;
-      width: 100%;
-      padding: 1rem 2rem;
-      border: none;
-      border-radius: 0.75rem;
-      cursor: pointer;
-      box-shadow: 0 4px 12px rgba(16, 185, 129, 0.25);
-      transition: all 0.2s ease;
-    }
-
-    .cta:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 8px 20px rgba(16, 185, 129, 0.35);
-      background: #059669;
-    }
-
-    .cta:active {
-      transform: translateY(0);
-    }
-
-    /* Le nouveau bouton "Essayer un exemple" */
     .example-btn {
-      background: none;
-      border: none;
-      color: #64748b;
-      font-family: inherit;
-      font-size: 0.85rem;
-      text-decoration: underline;
-      cursor: pointer;
-      transition: color 0.2s;
-      margin-bottom: 1rem;
+      background: none; border: none; color: #64748b; font-family: inherit; font-size: 0.85rem;
+      text-decoration: underline; cursor: pointer; transition: color 0.2s; margin-bottom: 1rem;
     }
+    .example-btn:hover { color: #10b981; }
 
-    .example-btn:hover {
-      color: #10b981;
+    .cta-wrap { margin-bottom: 1rem; }
+    .cta {
+      display: inline-flex; align-items: center; justify-content: center; gap: 0.6rem;
+      background: #10b981; color: white; font-family: inherit; font-size: 1rem; font-weight: 600;
+      width: 100%; padding: 1rem 2rem; border: none; border-radius: 0.75rem; cursor: pointer;
+      box-shadow: 0 4px 12px rgba(16, 185, 129, 0.25); transition: all 0.2s ease;
     }
+    .cta:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(16, 185, 129, 0.35); background: #059669; }
 
-    /* La zone de résultat */
+    /* L'animation de chargement */
+    .spinner {
+      display: none; width: 20px; height: 20px; border: 3px solid rgba(255,255,255,0.3);
+      border-radius: 50%; border-top-color: white; animation: spin 1s ease-in-out infinite;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
     .ingredients-block {
-      text-align: left;
-      width: 100%;
-      margin-top: 1.5rem;
-      padding: 1.5rem;
-      background: #f8fafc;
-      border-radius: 1rem;
-      border: 1px solid #e2e8f0;
-      animation: fadeIn 0.5s ease-out;
+      text-align: left; width: 100%; margin-top: 1.5rem; padding: 1.5rem;
+      background: #f8fafc; border-radius: 1rem; border: 1px solid #e2e8f0; animation: fadeIn 0.5s ease-out;
     }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(10px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
+    .ingredients-block h2 { font-size: 1.1rem; color: #0f172a; margin-bottom: 1rem; }
+    .rayon-title { font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.05em; color: #64748b; font-weight: 600; margin-top: 1rem; margin-bottom: 0.5rem; padding-bottom: 0.25rem; border-bottom: 1px solid #e2e8f0; }
+    .ingredients-block ul { list-style: none; padding: 0; margin: 0 0 1rem 0; }
+    .ingredients-block li { padding: 0.35rem 0; color: #334155; font-size: 0.95rem; display: flex; justify-content: space-between; }
+    .ingredients-block li span.quantite { font-weight: 600; color: #10b981; }
+    
+    .hidden { display: none !important; }
 
-    .ingredients-block h2 {
-      font-size: 1.1rem;
-      color: #0f172a;
-      margin-bottom: 1rem;
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
+    /* Boutons d'action (Copier / WhatsApp) */
+    .action-buttons {
+      display: flex; gap: 0.5rem; margin-top: 1.5rem; border-top: 1px solid #e2e8f0; padding-top: 1rem; flex-direction: column;
     }
+    .btn-action {
+      display: flex; align-items: center; justify-content: center; gap: 0.5rem; padding: 0.75rem; border-radius: 0.5rem;
+      font-size: 0.9rem; font-weight: 600; cursor: pointer; border: none; transition: background 0.2s; width: 100%;
+    }
+    .btn-copy { background: #e2e8f0; color: #334155; }
+    .btn-copy:hover { background: #cbd5e1; }
+    .btn-whatsapp { background: #25D366; color: white; }
+    .btn-whatsapp:hover { background: #20bd5a; }
 
-    .rayon-title {
-      font-size: 0.85rem;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-      color: #64748b;
-      font-weight: 600;
-      margin-top: 1rem;
-      margin-bottom: 0.5rem;
-      padding-bottom: 0.25rem;
-      border-bottom: 1px solid #e2e8f0;
-    }
+    .features-section { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; margin-top: 2rem; width: 100%; max-width: 800px;}
+    .feature-card { flex: 1; min-width: 200px; background: rgba(255, 255, 255, 0.6); padding: 1.25rem; border-radius: 1rem; text-align: center; border: 1px solid rgba(255, 255, 255, 0.8); }
+    .feature-icon { font-size: 1.5rem; margin-bottom: 0.5rem; }
+    .feature-title { font-size: 0.95rem; font-weight: 600; color: #0f172a; margin-bottom: 0.25rem; }
+    .feature-text { font-size: 0.8rem; color: #475569; line-height: 1.4; }
 
-    .ingredients-block ul {
-      list-style: none;
-      padding: 0;
-      margin: 0 0 1rem 0;
-    }
-
-    .ingredients-block li {
-      padding: 0.35rem 0;
-      color: #334155;
-      font-size: 0.95rem;
-      display: flex;
-      justify-content: space-between;
-    }
-
-    .ingredients-block li span.quantite {
-      font-weight: 600;
-      color: #10b981;
-    }
-
-    .hidden {
-      display: none !important;
-    }
-
-    /* La nouvelle section "Comment ça marche" */
-    .features-section {
-      width: 100%;
-      max-width: 800px;
-      margin-top: 3rem;
-      display: flex;
-      gap: 1.5rem;
-      justify-content: center;
-      flex-wrap: wrap; /* Pour s'adapter aux téléphones */
-    }
-
-    .feature-card {
-      flex: 1;
-      min-width: 220px;
-      background: rgba(255, 255, 255, 0.6);
-      padding: 1.5rem;
-      border-radius: 1rem;
-      text-align: center;
-      border: 1px solid rgba(255, 255, 255, 0.8);
-      backdrop-filter: blur(5px);
-    }
-
-    .feature-icon {
-      font-size: 2rem;
-      margin-bottom: 0.75rem;
-    }
-
-    .feature-title {
-      font-size: 1.05rem;
-      font-weight: 600;
-      color: #0f172a;
-      margin-bottom: 0.5rem;
-    }
-
-    .feature-text {
-      font-size: 0.85rem;
-      color: #475569;
-      line-height: 1.4;
-    }
+    /* Le Footer */
+    footer { margin-top: 3rem; text-align: center; font-size: 0.85rem; color: #64748b; padding-bottom: 1rem;}
   </style>
 </head>
 <body>
@@ -251,77 +122,71 @@
       <h1 class="logo">🔗 Nom de l'app</h1>
       <p class="tagline">Collez une recette, l'IA génère votre liste de courses triée par rayon de supermarché.</p>
 
-      <textarea
-        class="recette-input"
-        id="recette-input"
-        placeholder="Collez ici le texte de la recette ou les ingrédients..."
-        aria-label="Zone de texte pour coller une recette"
-      ></textarea>
+      <textarea class="recette-input" id="recette-input" placeholder="Collez ici le texte de la recette ou les ingrédients..."></textarea>
 
       <button type="button" class="example-btn" id="btn-example">
-        ✨ Manque d'inspiration ? Cliquer ici pour essayer un exemple
+        ✨ Manque d'inspiration ? Cliquer ici pour un exemple
       </button>
 
       <div class="cta-wrap">
-        <button type="button" class="cta" id="btn-analyze" aria-label="Générer la liste">
-          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+        <button type="button" class="cta" id="btn-analyze">
+          <div class="spinner" id="spinner"></div>
+          <svg id="btn-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
             <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v1m6 11h2m-6 0h-2v4m0-11v3m0 0h.01M12 12h4.01M16 20h4M4 12h4m12 0h.01M5 8h2a1 1 0 001-1V5a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1zm12 0h2a1 1 0 001-1V5a1 1 0 00-1-1h-2a1 1 0 00-1 1v2a1 1 0 001 1zM5 20h2a1 1 0 001-1v-2a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1z" />
           </svg>
-          <span>Créer ma liste de courses</span>
+          <span id="btn-text">Créer ma liste de courses</span>
         </button>
       </div>
 
       <div class="ingredients-block hidden" id="ingredients-block">
         <h2>🛒 Votre Panier</h2>
         <div id="ingredients-content"></div>
+        
+        <div class="action-buttons">
+          <button class="btn-action btn-copy" id="btn-copy">📋 Copier la liste</button>
+          <button class="btn-action btn-whatsapp" id="btn-whatsapp">💬 Partager sur WhatsApp</button>
+        </div>
       </div>
     </main>
 
     <div class="features-section">
-      <div class="feature-card">
-        <div class="feature-icon">✂️</div>
-        <div class="feature-title">1. Copiez-Collez</div>
-        <div class="feature-text">Prenez la recette de votre blog ou vidéo préférée et collez-la ici.</div>
-      </div>
-      <div class="feature-card">
-        <div class="feature-icon">🧠</div>
-        <div class="feature-title">2. L'IA analyse</div>
-        <div class="feature-text">Notre intelligence artificielle comprend les ingrédients et calcule les quantités.</div>
-      </div>
-      <div class="feature-card">
-        <div class="feature-icon">🛒</div>
-        <div class="feature-title">3. Faites vos courses</div>
-        <div class="feature-text">Votre liste est prête et automatiquement triée par rayon du supermarché.</div>
-      </div>
+      <div class="feature-card"><div class="feature-icon">✂️</div><div class="feature-title">1. Copiez-Collez</div><div class="feature-text">Prenez une recette et collez-la ici.</div></div>
+      <div class="feature-card"><div class="feature-icon">🧠</div><div class="feature-title">2. L'IA analyse</div><div class="feature-text">Notre IA calcule les quantités.</div></div>
+      <div class="feature-card"><div class="feature-icon">🛒</div><div class="feature-title">3. Faites vos courses</div><div class="feature-text">Votre liste est triée par rayon.</div></div>
     </div>
   </div>
+
+  <footer>
+    Créé avec ❤️ par un passionné | Outil 100% gratuit
+  </footer>
 
   <script>
     const button = document.getElementById('btn-analyze'); 
     const textarea = document.getElementById('recette-input');
-    const btnExample = document.getElementById('btn-example'); // Sélection du bouton d'exemple
+    const btnExample = document.getElementById('btn-example');
     const resultBlock = document.getElementById('ingredients-block');
     const resultContent = document.getElementById('ingredients-content');
-    const buttonText = button.querySelector('span');
+    const btnText = document.getElementById('btn-text');
+    const btnIcon = document.getElementById('btn-icon');
+    const spinner = document.getElementById('spinner');
+    
+    // Boutons de partage
+    const btnCopy = document.getElementById('btn-copy');
+    const btnWhatsApp = document.getElementById('btn-whatsapp');
+    let plainTextList = ""; // Stocke la liste au format texte brut
 
-    // Action pour le bouton d'exemple
     btnExample.addEventListener('click', () => {
       textarea.value = "Recette de Cookies Maison pour 4 personnes :\n- 250 grammes de farine\n- 125g de beurre fondu\n- 120g de sucre roux\n- Un sachet de sucre vanillé\n- Un demi sachet de levure chimique\n- 1 gros oeuf\n- 1 pincée de sel\n- 150g de pépites de chocolat au lait";
-      
-      // Petit effet visuel pour attirer l'oeil sur le bouton principal
-      button.style.transform = "scale(1.05)";
-      setTimeout(() => button.style.transform = "scale(1)", 200);
     });
 
     button.addEventListener('click', async () => {
         const text = textarea.value.trim();
-        if (!text) {
-            alert("Veuillez coller le texte d'une recette d'abord !");
-            return;
-        }
+        if (!text) { alert("Veuillez coller le texte d'une recette d'abord !"); return; }
 
-        buttonText.textContent = "Magie en cours...";
-        button.style.opacity = "0.7";
+        // Animation de chargement
+        btnText.textContent = "Analyse en cours...";
+        btnIcon.style.display = "none";
+        spinner.style.display = "block";
         button.style.cursor = "wait";
         resultBlock.classList.add('hidden');
         resultContent.innerHTML = "";
@@ -345,32 +210,49 @@
             });
 
             let html = "";
+            plainTextList = "🛒 *Ma liste de courses*\n\n";
+
             for (const [rayon, items] of Object.entries(rayons)) {
                 html += `<div class="rayon-title">${rayon}</div><ul>`;
+                plainTextList += `_${rayon}_\n`;
                 items.forEach(ing => {
-                    html += `<li>
-                                <span>${ing.item}</span>
-                                <span class="quantite">${ing.quantite} ${ing.unite || ''}</span>
-                             </li>`;
+                    html += `<li><span>${ing.item}</span><span class="quantite">${ing.quantite} ${ing.unite || ''}</span></li>`;
+                    plainTextList += `- ${ing.item} : ${ing.quantite} ${ing.unite || ''}\n`;
                 });
                 html += `</ul>`;
+                plainTextList += `\n`;
             }
             
+            plainTextList += `Généré gratuitement 🔗`;
+
             resultContent.innerHTML = html;
             resultBlock.classList.remove('hidden');
             
-            buttonText.textContent = "Générer une autre liste";
-            button.style.opacity = "1";
-            button.style.cursor = "pointer";
-
         } catch (error) {
             console.error(error);
-            resultBlock.classList.remove('hidden');
             resultContent.innerHTML = "<p style='color: #ef4444;'>❌ Oups ! Impossible de contacter l'IA. Réessayez.</p>";
-            buttonText.textContent = "Créer ma liste de courses";
-            button.style.opacity = "1";
+            resultBlock.classList.remove('hidden');
+        } finally {
+            // Remise à zéro du bouton
+            btnText.textContent = "Créer ma liste de courses";
+            btnIcon.style.display = "block";
+            spinner.style.display = "none";
             button.style.cursor = "pointer";
         }
+    });
+
+    // Actions des boutons de partage
+    btnCopy.addEventListener('click', () => {
+        navigator.clipboard.writeText(plainTextList).then(() => {
+            const originalText = btnCopy.textContent;
+            btnCopy.textContent = "✅ Copié !";
+            setTimeout(() => btnCopy.textContent = originalText, 2000);
+        });
+    });
+
+    btnWhatsApp.addEventListener('click', () => {
+        const whatsappUrl = `https://wa.me/?text=${encodeURIComponent(plainTextList)}`;
+        window.open(whatsappUrl, '_blank');
     });
   </script>
 </body>
