@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>LinkToCart — De la recette à la liste de courses</title>
+  <title>L'application de vos courses intelligentes</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;800&display=swap" rel="stylesheet">
@@ -17,27 +17,45 @@
     body {
       font-family: 'Inter', sans-serif;
       min-height: 100vh;
-      background: #f8fafc; /* Fond gris ultra clair très moderne */
-      color: #0f172a; /* Texte presque noir */
+      color: #0f172a;
       display: flex;
       flex-direction: column;
       align-items: center;
-      justify-content: center;
-      padding: 2rem;
+      padding: 3rem 1.5rem;
+      
+      /* Le nouveau fond aquarelle/mesh dynamique */
+      background-color: #f8fafc;
+      background-image: 
+        radial-gradient(at 0% 0%, rgba(167, 243, 208, 0.6) 0px, transparent 50%),
+        radial-gradient(at 100% 0%, rgba(186, 230, 253, 0.6) 0px, transparent 50%),
+        radial-gradient(at 100% 100%, rgba(167, 243, 208, 0.4) 0px, transparent 50%);
+      background-attachment: fixed;
     }
 
+    /* Le conteneur principal */
+    .app-container {
+      width: 100%;
+      max-width: 500px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    /* La carte blanche (l'application) */
     main {
       text-align: center;
       width: 100%;
-      max-width: 500px;
-      background: #ffffff;
+      background: rgba(255, 255, 255, 0.95);
       padding: 3rem 2rem;
       border-radius: 1.5rem;
-      box-shadow: 0 10px 40px -10px rgba(0, 0, 0, 0.08); /* Ombre douce façon carte */
+      box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.5);
+      backdrop-filter: blur(10px);
+      z-index: 10;
     }
 
     .logo {
-      font-size: 2.5rem;
+      font-size: 2.2rem;
       font-weight: 800;
       color: #0f172a;
       letter-spacing: -0.03em;
@@ -59,22 +77,18 @@
       padding: 1rem;
       font-family: inherit;
       font-size: 0.95rem;
-      border: 2px solid transparent;
+      border: 2px solid #e2e8f0;
       border-radius: 0.75rem;
       resize: vertical;
-      background: #f1f5f9; /* Fond gris léger pour l'input */
+      background: #f8fafc;
       color: #334155;
       transition: all 0.2s ease;
-    }
-
-    .recette-input::placeholder {
-      color: #94a3b8;
     }
 
     .recette-input:focus {
       outline: none;
       background: #ffffff;
-      border-color: #10b981; /* Vert action */
+      border-color: #10b981;
       box-shadow: 0 0 0 4px rgba(16, 185, 129, 0.1);
     }
 
@@ -87,7 +101,7 @@
       align-items: center;
       justify-content: center;
       gap: 0.6rem;
-      background: #10b981; /* Vert moderne et dynamique */
+      background: #10b981;
       color: white;
       font-family: inherit;
       font-size: 1rem;
@@ -104,18 +118,31 @@
     .cta:hover {
       transform: translateY(-2px);
       box-shadow: 0 8px 20px rgba(16, 185, 129, 0.35);
-      background: #059669; /* Vert légèrement plus foncé au survol */
+      background: #059669;
     }
 
     .cta:active {
       transform: translateY(0);
     }
 
-    .cta svg {
-      width: 1.25rem;
-      height: 1.25rem;
+    /* Le nouveau bouton "Essayer un exemple" */
+    .example-btn {
+      background: none;
+      border: none;
+      color: #64748b;
+      font-family: inherit;
+      font-size: 0.85rem;
+      text-decoration: underline;
+      cursor: pointer;
+      transition: color 0.2s;
+      margin-bottom: 1rem;
     }
 
+    .example-btn:hover {
+      color: #10b981;
+    }
+
+    /* La zone de résultat */
     .ingredients-block {
       text-align: left;
       width: 100%;
@@ -175,42 +202,116 @@
     .hidden {
       display: none !important;
     }
+
+    /* La nouvelle section "Comment ça marche" */
+    .features-section {
+      width: 100%;
+      max-width: 800px;
+      margin-top: 3rem;
+      display: flex;
+      gap: 1.5rem;
+      justify-content: center;
+      flex-wrap: wrap; /* Pour s'adapter aux téléphones */
+    }
+
+    .feature-card {
+      flex: 1;
+      min-width: 220px;
+      background: rgba(255, 255, 255, 0.6);
+      padding: 1.5rem;
+      border-radius: 1rem;
+      text-align: center;
+      border: 1px solid rgba(255, 255, 255, 0.8);
+      backdrop-filter: blur(5px);
+    }
+
+    .feature-icon {
+      font-size: 2rem;
+      margin-bottom: 0.75rem;
+    }
+
+    .feature-title {
+      font-size: 1.05rem;
+      font-weight: 600;
+      color: #0f172a;
+      margin-bottom: 0.5rem;
+    }
+
+    .feature-text {
+      font-size: 0.85rem;
+      color: #475569;
+      line-height: 1.4;
+    }
   </style>
 </head>
 <body>
-  <main>
-    <h1 class="logo">🔗 LinkToCart</h1>
-    <p class="tagline">Collez une recette en vrac, l'IA génère votre liste de courses triée par rayon.</p>
 
-    <textarea
-      class="recette-input"
-      id="recette-input"
-      placeholder="Collez ici le texte de la recette ou les ingrédients..."
-      aria-label="Zone de texte pour coller une recette"
-    ></textarea>
+  <div class="app-container">
+    <main>
+      <h1 class="logo">🔗 Nom de l'app</h1>
+      <p class="tagline">Collez une recette, l'IA génère votre liste de courses triée par rayon de supermarché.</p>
 
-    <div class="cta-wrap">
-      <button type="button" class="cta" id="btn-analyze" aria-label="Générer la liste">
-        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-          <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v1m6 11h2m-6 0h-2v4m0-11v3m0 0h.01M12 12h4.01M16 20h4M4 12h4m12 0h.01M5 8h2a1 1 0 001-1V5a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1zm12 0h2a1 1 0 001-1V5a1 1 0 00-1-1h-2a1 1 0 00-1 1v2a1 1 0 001 1zM5 20h2a1 1 0 001-1v-2a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1z" />
-        </svg>
-        <span>Créer ma liste de courses</span>
+      <textarea
+        class="recette-input"
+        id="recette-input"
+        placeholder="Collez ici le texte de la recette ou les ingrédients..."
+        aria-label="Zone de texte pour coller une recette"
+      ></textarea>
+
+      <button type="button" class="example-btn" id="btn-example">
+        ✨ Manque d'inspiration ? Cliquer ici pour essayer un exemple
       </button>
-    </div>
 
-    <!-- Zone de résultat stylisée -->
-    <div class="ingredients-block hidden" id="ingredients-block">
-      <h2>🛒 Votre Panier</h2>
-      <div id="ingredients-content"></div>
+      <div class="cta-wrap">
+        <button type="button" class="cta" id="btn-analyze" aria-label="Générer la liste">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v1m6 11h2m-6 0h-2v4m0-11v3m0 0h.01M12 12h4.01M16 20h4M4 12h4m12 0h.01M5 8h2a1 1 0 001-1V5a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1zm12 0h2a1 1 0 001-1V5a1 1 0 00-1-1h-2a1 1 0 00-1 1v2a1 1 0 001 1zM5 20h2a1 1 0 001-1v-2a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1z" />
+          </svg>
+          <span>Créer ma liste de courses</span>
+        </button>
+      </div>
+
+      <div class="ingredients-block hidden" id="ingredients-block">
+        <h2>🛒 Votre Panier</h2>
+        <div id="ingredients-content"></div>
+      </div>
+    </main>
+
+    <div class="features-section">
+      <div class="feature-card">
+        <div class="feature-icon">✂️</div>
+        <div class="feature-title">1. Copiez-Collez</div>
+        <div class="feature-text">Prenez la recette de votre blog ou vidéo préférée et collez-la ici.</div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🧠</div>
+        <div class="feature-title">2. L'IA analyse</div>
+        <div class="feature-text">Notre intelligence artificielle comprend les ingrédients et calcule les quantités.</div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🛒</div>
+        <div class="feature-title">3. Faites vos courses</div>
+        <div class="feature-text">Votre liste est prête et automatiquement triée par rayon du supermarché.</div>
+      </div>
     </div>
-  </main>
+  </div>
 
   <script>
     const button = document.getElementById('btn-analyze'); 
     const textarea = document.getElementById('recette-input');
+    const btnExample = document.getElementById('btn-example'); // Sélection du bouton d'exemple
     const resultBlock = document.getElementById('ingredients-block');
     const resultContent = document.getElementById('ingredients-content');
     const buttonText = button.querySelector('span');
+
+    // Action pour le bouton d'exemple
+    btnExample.addEventListener('click', () => {
+      textarea.value = "Recette de Cookies Maison pour 4 personnes :\n- 250 grammes de farine\n- 125g de beurre fondu\n- 120g de sucre roux\n- Un sachet de sucre vanillé\n- Un demi sachet de levure chimique\n- 1 gros oeuf\n- 1 pincée de sel\n- 150g de pépites de chocolat au lait";
+      
+      // Petit effet visuel pour attirer l'oeil sur le bouton principal
+      button.style.transform = "scale(1.05)";
+      setTimeout(() => button.style.transform = "scale(1)", 200);
+    });
 
     button.addEventListener('click', async () => {
         const text = textarea.value.trim();
@@ -219,7 +320,6 @@
             return;
         }
 
-        // État de chargement
         buttonText.textContent = "Magie en cours...";
         button.style.opacity = "0.7";
         button.style.cursor = "wait";
@@ -237,7 +337,6 @@
 
             const data = await response.json();
             
-            // Regrouper les ingrédients par rayon
             const rayons = {};
             data.ingredients.forEach(ing => {
                 const rayon = ing.rayon || "Autre";
@@ -245,7 +344,6 @@
                 rayons[rayon].push(ing);
             });
 
-            // Construire l'affichage par rayon
             let html = "";
             for (const [rayon, items] of Object.entries(rayons)) {
                 html += `<div class="rayon-title">${rayon}</div><ul>`;
@@ -258,11 +356,9 @@
                 html += `</ul>`;
             }
             
-            // Afficher le résultat
             resultContent.innerHTML = html;
             resultBlock.classList.remove('hidden');
             
-            // Réinitialiser le bouton
             buttonText.textContent = "Générer une autre liste";
             button.style.opacity = "1";
             button.style.cursor = "pointer";
