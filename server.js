@@ -12,10 +12,11 @@ app.use(cors());
 app.use(express.json());
 
 app.post("/analyze", async (req, res) => {
-  const recette = req.body?.recette;
+  // 💡 LA CORRECTION EST ICI : le serveur accepte désormais "recipe"
+  const recette = req.body?.recipe || req.body?.recette;
 
   if (!recette || typeof recette !== "string") {
-    return res.status(400).json({ error: "Corps attendu : { \"recette\": \"texte de la recette\" }" });
+    return res.status(400).json({ error: "Corps attendu : { \"recipe\": \"texte de la recette\" }" });
   }
 
   try {
@@ -24,7 +25,7 @@ app.post("/analyze", async (req, res) => {
       messages: [
         {
           role: "system",
-          content: `Tu es un assistant expert en logistique culinaire pour l'application CookLink.
+          content: `Tu es un assistant expert en logistique culinaire pour l'application LinkToCart.
           TA MISSION : Extraire les ingrédients en JSON strict.
           RÈGLES IMPÉRATIVES :
           1. Quantités : Tu dois TOUJOURS estimer une quantité numérique. Convertis les mesures floues (verre, bol, pincée) en grammes ou ml standards.
@@ -56,7 +57,5 @@ app.post("/analyze", async (req, res) => {
 // Sert les fichiers du dossier actuel (index.html, css, etc.)
 app.use(express.static('.'));
 app.listen(3000, () => {
-  console.log("Serveur CookLink sur http://localhost:3000");
+  console.log("Serveur LinkToCart en ligne");
 });
-// test
-// Ceci est un test pour forcer la mise a jour
